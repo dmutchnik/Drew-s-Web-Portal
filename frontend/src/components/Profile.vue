@@ -105,7 +105,7 @@ export default {
       if (this.searchQuery.length > 0) {
         try {
           this.loading = true;
-          const response = await fetch(`https://pixabay.com/api/?key=43280780-f8b60b2735b8aef78f0215ac4&q=${encodeURIComponent(this.searchQuery)}`);
+          const response = await fetch(`https://pixabay.com/api/?key=YOUR_API_KEY=${encodeURIComponent(this.searchQuery)}`);
           const data = await response.json();
           this.images = data.hits;
           this.loading = false;
