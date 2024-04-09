@@ -1,7 +1,7 @@
 
 # Drew's Web Portal
 
-This project is a web portal built using Vue.js for the frontend and Node.js for the backend. It provides features for user registration, login, and profile management.
+This project is a web portal built using Vue.js for the frontend and Python with the Flask framework for the backend. It provides features for user registration, login, and profile management.
 
 
 ## Features
