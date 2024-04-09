@@ -12,12 +12,14 @@
         </div>
         <div>
           <button type="submit">Login</button>
+          <p v-if="loginError" class="error-message">Invalid email or password. Please try again.</p>
         </div>
       </form>
     </div>
   </template>
   
   <script>
+  // Issues with Fetch API for CORS cookie responses
   import axios from 'axios';
   
   export default {
@@ -26,7 +28,8 @@
         formData: {
           email: '',
           password: ''
-        }
+        },
+        loginError: false
       };
     },
     methods: {
@@ -45,16 +48,12 @@
   
           console.log('Login successful');
   
-          // Fetch session data to confirm login success and handle session cookies
-          const sessionResponse = await axios.get('http://localhost:5000/session', {
-            withCredentials: true // Include cookies in the request
-          });
-  
           // Redirect the user to the profile page after successful login
           this.$router.push('/profile');
         } catch (error) {
           console.error('Error logging in:', error);
-          // Handle login error
+          // Display login error message
+          this.loginError = true;
         }
       }
     }
@@ -65,7 +64,7 @@
   #login-form {
     font-family: 'Arial', sans-serif;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
     background-color: #fff; /* Set white background */
     border-radius: 10px; /* Add border radius */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
@@ -111,5 +110,10 @@
   button:hover {
     background-color: #0056b3; /* Darker blue on hover */
   }
+  .error-message {
+    color: red;
+    margin-top: 0.5rem;
+  }
+
   </style>
   

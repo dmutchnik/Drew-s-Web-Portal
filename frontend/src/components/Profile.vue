@@ -87,7 +87,7 @@ export default {
             name: this.user.name,
             email: this.user.email,
             phone: this.user.phone,
-            image: this.user.image // Include profile image in the update
+            image: this.user.image
           }),
           credentials: 'include' // Send cookies for authentication
         });

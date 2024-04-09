@@ -17,15 +17,16 @@ migrate = Migrate(app, db)
 
 CORS(app, supports_credentials=True)  # Enable CORS for all routes
 
-# Define your User model here
+# User object
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
-    password_hash = db.Column(db.String(100))  # Add password_hash column
+    password_hash = db.Column(db.String(100))
     phone = db.Column(db.String(20))
     image = db.Column(db.String(100))
 
+# Setup database with dummy data if creating new instance
 def setup_database():
     with app.app_context():
         db.create_all()
@@ -54,8 +55,8 @@ def send_welcome_email(email):
     message = {
         'from_email': 'test@limudnaim.co.il',
         'to': [{'email': email}],
-        'subject': 'Welcome to Our Platform!',
-        'text': 'Welcome to our platform! We are excited to have you onboard.'
+        'subject': 'Welcome to Drew\'s Portal!',
+        'text': 'Welcome to our Drew\'s Portal! We are excited to have you onboard. \nEmail dmutchnik@gmail.com with any inquiries or feedback. \n Best, Drew'
     }
     try:
         result = mandrill_client.messages.send(message=message)
@@ -91,22 +92,13 @@ def login():
     if user and check_password_hash(user.password_hash, password):
         # Set session variables
         session['user_id'] = user.id
-        print(session['user_id'])
-        print(session.keys(), session.values)
         return jsonify({'message': 'Login successful'}), 200
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
 
-@app.route('/session', methods=['GET'])
-def getS():
-    print(session['user_id'])
-    print(session.keys(), session.values)
-    return jsonify({}), 200
-
 @app.route('/profile', methods=['GET', 'PUT'])
 def profile():
     # Check if user is logged in
-    print(session.keys(), session.values)
     if 'user_id' not in session:
         return jsonify({'error': 'Unauthorized access'}), 401
     user_id = session['user_id']

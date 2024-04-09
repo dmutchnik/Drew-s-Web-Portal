@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="form-group">
-        <button type="submit">Register</button>
+        <button type="submit" class="button">Register</button>
       </div>
     </form>
   </div>
@@ -135,7 +135,7 @@ export default {
 #registration-form {
   font-family: 'Arial', sans-serif;
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
   background-color: #fff; /* Set white background */
   color: #333; /* Set dark text color */
   border-radius: 10px; /* Rounded corners */
@@ -163,20 +163,23 @@ input {
   font-size: 1rem; /* Smaller font size for inputs */
   border: 2px solid #007bff; /* Blue border */
   border-radius: 5px; /* Rounded corners */
+  color: #007bff; /* Blue text color */
   width: 30%; /* Full width */
   box-sizing: border-box; /* Include padding in the width */
 }
 
-input[type="submit"] {
+.button {
   padding: 0.5rem 2rem; /* Adjust button padding */
   font-size: 1rem; /* Smaller font size for button */
+  border: none;
+  border-radius: 10px;
   background-color: #007bff; /* Blue color for submit button */
   color: #fff; /* White text color */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
+.button:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
 
