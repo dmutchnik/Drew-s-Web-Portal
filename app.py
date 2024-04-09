@@ -10,8 +10,8 @@ import mandrill
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['MANDRILL_API_KEY'] = 'md-qdqA-637dFS7FZY-oqO8gQ'  # Your Mandrill API key
-app.config['SECRET_KEY'] = 'bofa'
+app.config['MANDRILL_API_KEY'] = 'YOUR API KEY'  # Your Mandrill API key
+app.config['SECRET_KEY'] = 'YOUR SECRET KEY'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
