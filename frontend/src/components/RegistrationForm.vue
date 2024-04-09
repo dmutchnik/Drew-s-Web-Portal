@@ -34,13 +34,15 @@
         </div>
       </div>
       <div class="form-group">
-        <button type="submit" class="submit-button">Register</button>
+        <button type="submit">Register</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import mandrill from 'mandrill-api/Mandrill';
+
 export default {
   data() {
     return {
@@ -49,7 +51,7 @@ export default {
         email: '',
         password: '',
         phone: '',
-        image: null
+        image: null // Hold the selected Pixabay image URL
       },
       loading: false,
       images: [],
@@ -60,7 +62,7 @@ export default {
   },
   computed: {
     displayedImages() {
-      return this.images.slice(0, 9);
+      return this.images.slice(0, 9); // Limit to only 9 images
     }
   },
   methods: {
@@ -77,8 +79,16 @@ export default {
           this.loading = false;
         }
       } else {
+        // Reset images when search query is empty
         this.images = [];
       }
+    },
+    selectImage(image) {
+      // Handle image selection
+      console.log('Selected image:', image);
+      // Update form data with selected image
+      this.formData.image = image.previewURL;
+      this.selectedImage = image;
     },
     async registerUser() {
       try {
@@ -91,7 +101,7 @@ export default {
 
         const response = await fetch('http://localhost:5000/register', {
           method: 'POST',
-          body: formData
+          body: formData // Send form data directly
         });
 
         if (!response.ok) {
@@ -99,6 +109,7 @@ export default {
           return;
         }
 
+        // Clear form data after successful registration
         this.formData = {
           name: '',
           email: '',
@@ -107,11 +118,13 @@ export default {
           image: null
         };
 
+        // Redirect user to login page after successful registration
         this.$router.push('/login');
 
         console.log('User registered successfully');
       } catch (error) {
         console.error('Error registering user:', error);
+        // Handle error
       }
     }
   }
@@ -123,52 +136,48 @@ export default {
   font-family: 'Arial', sans-serif;
   text-align: center;
   padding: 2rem;
-  background-color: #fff;
-  color: #333;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Set white background */
+  color: #333; /* Set dark text color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
 h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #007bff;
+  font-size: 2rem; /* Smaller font size */
+  margin-bottom: 2rem; /* Add space below the title */
+  color: #007bff; /* Blue color for the title */
 }
 
 .form-group {
-  margin-bottom: 1rem;
-  text-align: center;
+  margin-bottom: 1rem; /* Add space between form elements */
+  text-align: center; /* Align form labels to the left */
 }
 
 label {
-  display: block;
-  margin-bottom: 0.5rem;
+  display: block; /* Display labels as block elements */
+  margin-bottom: 0.5rem; /* Add space below labels */
 }
 
 input {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 2px solid #007bff;
-  border-radius: 5px;
-  width: 30%;
-  box-sizing: border-box;
+  padding: 0.5rem; /* Reduce input padding */
+  font-size: 1rem; /* Smaller font size for inputs */
+  border: 2px solid #007bff; /* Blue border */
+  border-radius: 5px; /* Rounded corners */
+  width: 30%; /* Full width */
+  box-sizing: border-box; /* Include padding in the width */
 }
 
-input[type="submit"],
-.submit-button {
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: #fff;
+input[type="submit"] {
+  padding: 0.5rem 2rem; /* Adjust button padding */
+  font-size: 1rem; /* Smaller font size for button */
+  background-color: #007bff; /* Blue color for submit button */
+  color: #fff; /* White text color */
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border: none;
-  border-radius: 10px;
 }
 
-input[type="submit"]:hover,
-.submit-button:hover {
-  background-color: #0056b3;
+input[type="submit"]:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 .pixabay-images {
@@ -179,13 +188,18 @@ input[type="submit"]:hover,
 
 .pixabay-images img {
   width: 50%;
-  max-height: 100px;
-  object-fit: cover;
+  max-height: 100px; /* Limit the height */
+  object-fit: cover; /* Maintain aspect ratio */
   cursor: pointer;
 }
 
 .pixabay-images .selected img {
   border: 2px solid blue;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
 }
 
 .error-message {
